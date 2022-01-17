@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div>
+    <div>  
       <h1 className="active">Hello</h1>
     </div>
   );
