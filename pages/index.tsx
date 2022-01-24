@@ -21,7 +21,7 @@ export default function Home({ results }: MovieProps) {
             <Image
               layout="fill"
               objectFit="cover"
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={`${movie.original_title} Poster`}
             />
           </div>
@@ -36,6 +36,8 @@ export default function Home({ results }: MovieProps) {
           gap: 20px;
         }
         .movie {
+          cursor: pointer;
+
           &:hover {
             .poster {
               transform: scale(1.05) translateY(-10px);
