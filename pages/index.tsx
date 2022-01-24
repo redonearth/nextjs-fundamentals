@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import SEO from '../components/SEO';
 
-const API_KEY = '5efe6813c047c5a28d580b92e30a6262';
+interface MovieProps {
+  results?: IMovieData[];
+}
 
 interface IMovieData {
   id: string;
@@ -10,19 +11,11 @@ interface IMovieData {
   poster_path: string;
 }
 
-export default function Home() {
-  const [movies, setMovies] = useState<IMovieData[]>([]);
-  useEffect(() => {
-    (async () => {
-      const { results } = await (await fetch('/api/movies')).json();
-      setMovies(results);
-    })();
-  }, []);
+export default function Home({ results }: MovieProps) {
   return (
     <div className="container">
       <SEO title="Home" />
-      {!movies && <h4>Loading...</h4>}
-      {movies?.map((movie: IMovieData) => (
+      {results?.map((movie: IMovieData) => (
         <div className="movie" key={movie.id}>
           <div className="poster">
             <Image
@@ -65,4 +58,15 @@ export default function Home() {
       `}</style>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const { results } = await (
+    await fetch('http://localhost:3000/api/movies')
+  ).json();
+  return {
+    props: {
+      results,
+    },
+  };
 }
