@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -5,6 +6,7 @@ export default function Navbar() {
   const router = useRouter();
   return (
     <nav>
+      <Image src="/vercel.svg" width={100} height={40} alt="Logo" />
       <div>
         <Link href="/">
           <a className={router.pathname === '/' ? 'active' : ''}>Home</a>
@@ -24,7 +26,10 @@ export default function Navbar() {
           box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
             rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
         }
-
+        img {
+          max-width: 100px;
+          margin-bottom: 5px;
+        }
         nav div {
           display: flex;
           gap: 10px;
