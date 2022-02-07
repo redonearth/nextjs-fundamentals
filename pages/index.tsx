@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import SEO from '../components/SEO';
 
 interface MovieProps {
@@ -12,11 +14,27 @@ interface IMovieData {
 }
 
 export default function Home({ results }: MovieProps) {
+  const router = useRouter();
+  const onClick = (id: string, title: string) => {
+    router.push(
+      {
+        pathname: `/movies/${id}`,
+        query: {
+          title,
+        },
+      },
+      `/movies/${id}`
+    );
+  };
   return (
     <div className="container">
       <SEO title="Home" />
       {results?.map((movie: IMovieData) => (
-        <div className="movie" key={movie.id}>
+        <div
+          className="movie"
+          onClick={() => onClick(movie.id, movie.original_title)}
+          key={movie.id}
+        >
           <div className="poster">
             <Image
               layout="fill"
@@ -25,7 +43,19 @@ export default function Home({ results }: MovieProps) {
               alt={`${movie.original_title} Poster`}
             />
           </div>
-          <h4>{movie.original_title}</h4>
+          <h4>
+            <Link
+              href={{
+                pathname: `/movies/${movie.id}`,
+                query: {
+                  title: movie.original_title,
+                },
+              }}
+              as={`/movies/${movie.id}`}
+            >
+              <a>{movie.original_title}</a>
+            </Link>
+          </h4>
         </div>
       ))}
       <style jsx>{`
